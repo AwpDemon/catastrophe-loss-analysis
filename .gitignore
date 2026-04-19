@@ -17,9 +17,7 @@ env/
 data/*.csv
 data/*.xlsx
 
-# Visualizations (generated locally)
-visualizations/*.png
-visualizations/*.jpg
+# Visualizations (PDF/SVG generated locally; PNGs committed for README)
 visualizations/*.pdf
 visualizations/*.svg
 
