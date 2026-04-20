@@ -1,0 +1,42 @@
+name: analysis
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  tests-and-stress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Generate dataset
+        run: python data/generate_sales_data.py
+
+      - name: Statistical tests
+        run: python analysis/06_statistical_tests.py
+
+      - name: Cat stress test (Monte Carlo)
+        run: python analysis/07_cat_stress_test.py
+
+      - name: Rebuild Excel pivot starter
+        run: python excel_templates/build_template.py
+
+      - name: Check outputs
+        run: |
+          test -f visualizations/11_statistical_tests.png
+          test -f visualizations/12_cat_stress_test.png
+          test -f excel_templates/kat_pivot_starter.xlsx
+          echo "analysis pipeline ran end-to-end"

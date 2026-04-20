@@ -1,5 +1,15 @@
 # KAT Insurance — Portfolio Analytics
 
+[![analysis](https://github.com/AwpDemon/catastrophe-loss-analysis/actions/workflows/analysis.yml/badge.svg)](https://github.com/AwpDemon/catastrophe-loss-analysis/actions/workflows/analysis.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![python](https://img.shields.io/badge/python-3.11-blue)
+
+**Highlights**
+- 67K+ insurance transactions across 5 product lines, 8 regions, 2 years. Excel PivotTables + Python cross-validation.
+- Three findings, formally tested: Q3 loss-ratio spike (**Welch's t, p=0.013, Cohen's d=+1.59**), Commercial vs Auto YoY gap (**bootstrap p<0.001**), tenure churn (**χ² p ≈ 3.8e-95**).
+- 20,000-iteration hurricane Monte Carlo on the FL + Gulf Coast Home book — **1-in-100 loss = 12.6% of book premium, 1-in-250 = 16.6%** — plus a sized reinsurance layer recommendation.
+- Pre-built Excel pivot starter (`kat_pivot_starter.xlsx`) with formula-driven loss/expense/combined ratios and a conditional-formatted region×line heatmap.
+
 I worked through a dataset of 65,000+ insurance sales transactions (2022–2023, Southeastern US, 5 product lines) trying to answer the question I kept hearing at Gamma Iota Sigma events: *where is an insurer actually making or losing money, and why?* This is the analysis.
 
 ## Findings
