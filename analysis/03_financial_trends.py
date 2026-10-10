@@ -131,7 +131,7 @@ print(f"  Non-Q3 Loss Ratio:           {non_q3_lr:.2%}")
 print(f"  Seasonal Swing:              {lr_swing:+.1f} percentage points")
 
 print(f"\nKey Finding: Q3 loss ratios spike by ~{abs(lr_swing):.0f} points due to hurricane")
-print("  season, primarily impacting Home and Auto in Florida and Gulf Coast regions.")
+print("  season timing (synthetic data; segment attribution in analysis/08_headline_metrics.py).")
 print("  Recommendation: Implement dynamic reserve adjustments for Q3.")
 
 
@@ -326,14 +326,15 @@ print("  supports a revised retention pricing strategy targeting the 12-24 month
 print(f"\n\n{'━' * 80}")
 print("TREND ANALYSIS SUMMARY")
 print(f"{'━' * 80}")
-print("""
-  1. PREMIUM GROWTH: Commercial lines lead growth; auto showing saturation signals.
-  2. LOSS RATIO: Q3 seasonal spikes of ~15 points driven by hurricane season.
-  3. REGIONAL: Metro markets have diminishing profit-to-volume ratios vs. rural.
-  4. PRODUCT MIX: Favorable shift toward higher-margin commercial (+8% mix share).
-  5. RETENTION: Steep early churn (23%) flattens for tenured customers (8%).
+# All numbers below are computed above (an earlier version hard-coded values
+# such as "~15 points", "+8% mix share" and "23% -> 8% churn" that did not match).
+print(f"""
+  1. PREMIUM GROWTH: Commercial {yoy_growth.get('Commercial', 0):+.1f}% YoY vs Auto {yoy_growth.get('Auto', 0):+.1f}%.
+  2. LOSS RATIO: Q3 monthly loss ratios run ~{abs(lr_swing):.0f} points above the rest of the year.
+  3. REGIONAL: see the region table above (metro vs rural premium and profit ratios).
+  4. PRODUCT MIX: Commercial mix share {comm_shift:+.1f}pp year over year.
+  5. RETENTION: churn {fy_churn:.1f}% in the first 12 months vs {mature_churn:.1f}% after 36 months.
 
-  These five trends directly informed the revenue optimization and cost efficiency
-  recommendations delivered to KAT Insurance Co. leadership.
+  Data is synthetic (data/generate_sales_data.py); these describe the simulated book.
 """)
 print("=" * 80)

@@ -277,17 +277,14 @@ print(f"\n\n{'━' * 80}")
 print("REVENUE OPTIMIZATION SUMMARY")
 print(f"{'━' * 80}")
 print("""
-  Opportunity Area                     Estimated Impact
-  ─────────────────────────────────────────────────────
-  1. Reprice underperforming segments  $250K-500K annual
-  2. Channel mix optimization          $150K-300K commission savings
-  3. Auto+Home cross-sell program      $200K-400K new premium
-  4. Renewal discount rationalization  $100K-200K premium recovery
-  5. Agent productivity coaching       10-15% premium lift for juniors
+  Opportunity areas (from the tables above):
+  1. Reprice segments with the highest loss ratios
+  2. Review channel mix (commission rates differ by channel)
+  3. Auto + Home cross-sell
+  4. Renewal discount design (churn with vs without discount, above)
+  5. Agent productivity (tier table above)
 
-  Total Estimated Revenue Impact:      $700K - $1.4M annually
-
-  These estimates are based on conservative assumptions and would require
-  actuarial validation before implementation.
+  Dollar impact is NOT estimated: the synthetic data has no price elasticity or
+  conversion response, so any figure would be an assumption, not a result.
 """)
 print("=" * 80)

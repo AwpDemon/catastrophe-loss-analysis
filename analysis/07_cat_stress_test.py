@@ -7,15 +7,15 @@ season do to the book?
 
 This script Monte Carlos a hurricane year on top of the existing
 Florida + Gulf Coast home portfolio:
-  - annual hurricane count ~ Poisson(lambda) with lambda drawn from a
-    prior informed by 2005-2023 landfall data
-  - per-event damage factor ~ LogNormal calibrated so a 1-in-100 year
-    loss multiple lines up with published industry catastrophe models
+  - annual hurricane count ~ Poisson(lambda = 2.1), a fixed assumption
+  - per-event loss = LogNormal(ln 0.12, 1.1) x exposed premium, an
+    illustrative assumption (NOT calibrated to landfall data or to any
+    vendor catastrophe model)
   - only Home premium in FL + Gulf Coast is exposed
 
-Outputs a loss distribution and reports PML at key return periods
-(VaR-style), plus an estimated reinsurance attachment point that
-would cap the book's 1-in-100 year loss to 20% of premium.
+Outputs a loss distribution, PMLs at key return periods (VaR-style), and
+the excess-of-loss layer needed above a retention equal to the exposed
+premium. Results are only as good as the two assumed distributions.
 """
 
 import os
@@ -89,11 +89,16 @@ def main():
     pml100 = np.quantile(annual_loss, 0.99)
     pml250 = np.quantile(annual_loss, 1 - 1/250)
     attachment = max(0, pml100 - cap)
-    layer = max(0, pml250 - max(pml100, cap))
+    # Limit needed above the retention to cover the 1-in-100 and 1-in-250 losses.
+    # (An earlier version printed pml250 - pml100 as the layer, which is not a
+    # layer attaching at the retention.)
+    layer100 = max(0, pml100 - cap)
+    layer250 = max(0, pml250 - cap)
     print(f"   1-in-100 gross cat loss      : ${pml100/1e6:,.2f}M")
     print(f"   Retention target (1x exposed): ${cap/1e6:,.2f}M")
     if attachment > 0:
-        print(f"   Implied reinsurance layer    : ${layer/1e6:,.2f}M xs ${cap/1e6:,.2f}M")
+        print(f"   Layer to cover 1-in-100      : ${layer100/1e6:,.2f}M xs ${cap/1e6:,.2f}M")
+        print(f"   Layer to cover 1-in-250      : ${layer250/1e6:,.2f}M xs ${cap/1e6:,.2f}M")
     else:
         print(f"   Net retained 1-in-100 loss   : ${pml100/1e6:,.2f}M (within retention — no RI layer triggered)")
         print(f"   1-in-250 tail loss            : ${pml250/1e6:,.2f}M — candidate for a thin cat-xs-loss cover")

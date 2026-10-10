@@ -1,7 +1,7 @@
 """
 KAT Insurance Co. - Synthetic Sales Data Generator
 ====================================================
-Generates 65,000+ realistic insurance sales transactions spanning
+Generates ~68K synthetic insurance sales transactions (68,211 with seed 42) spanning
 January 2022 through December 2023, mirroring the production data
 schema used in the original Excel-based analysis.
 

@@ -295,36 +295,6 @@ for _, r in regional_exp.iterrows():
     print(f"  {r['region']:<20}  {r['expense_ratio']:.1%}  ({status} benchmark by {abs(diff):.1%} pts)")
 
 
-# ─── Reporting Accuracy Improvement ──────────────────────────────────────────
-print(f"\n\n{'━' * 80}")
-print("6. REPORTING ACCURACY IMPROVEMENTS")
-print(f"{'━' * 80}")
-
-print("""
-  The analysis identified several data definition and calculation inconsistencies
-  that were contributing to ~20% discrepancy in reported figures:
-
-  Issue                              Impact    Resolution
-  ──────────────────────────────────────────────────────────────────────────
-  1. Gross vs Net premium            ~8%      Standardized all reports to
-     used inconsistently                      net premium after discounts
-
-  2. Loss ratio calculated on        ~5%      Switched to incurred loss
-     paid vs incurred basis                   basis with IBNR reserve
-
-  3. Commission accrual timing       ~3%      Aligned commission recognition
-     mismatch                                 with policy effective date
-
-  4. Admin cost allocation           ~2%      Implemented activity-based
-     methodology varied                       costing allocation model
-
-  5. Multi-policy customer           ~2%      Deduplicated customer records
-     double-counting                          using customer_id as key
-
-  Total Reporting Accuracy Improvement: ~20%
-  Validated by reconciliation of Q1 2024 financials against GL.
-""")
-
 # ─── Cost Efficiency Summary ─────────────────────────────────────────────────
 print(f"\n{'━' * 80}")
 print("COST EFFICIENCY SUMMARY")
@@ -339,9 +309,9 @@ print(f"""
   1. Reduce admin costs in high-cost channels by 10-15%
   2. Restructure commission tiers to reward profitable growth
   3. Implement dynamic claims reserves for hurricane season
-  4. Standardize expense allocation methodology (20% reporting improvement)
+  4. Standardize expense allocation methodology
   5. Target large-loss mitigation for top 5% severity claims
 
-  Estimated Annual Cost Savings: $400K - $800K
+  Savings are not estimated (synthetic data; would require cost assumptions).
 """)
 print("=" * 80)

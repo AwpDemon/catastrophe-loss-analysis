@@ -2,7 +2,7 @@
 
 ## Overview
 
-The primary analysis was conducted in Microsoft Excel using PivotTables, calculated fields, conditional formatting, and data validation. This document details the exact Excel methodology used to analyze 65,000+ insurance sales transactions.
+The primary analysis was conducted in Microsoft Excel using PivotTables, calculated fields, conditional formatting, and data validation. This document details the exact Excel methodology used to analyze 68,211 synthetic insurance transactions.
 
 ## Data Preparation
 
@@ -217,13 +217,3 @@ All dashboard elements are linked to PivotTables and update automatically when t
 2. Data tab > Refresh All
 3. All PivotTables and charts update automatically
 4. Review "Data Quality" helper sheet for any validation failures
-
-## Reporting Accuracy Improvements
-
-The following standardization measures improved reporting accuracy by approximately 20%:
-
-1. **Net Premium Standardization:** All reports now use net premium (after renewal discounts) rather than gross premium, eliminating 8% variance.
-2. **Incurred Basis Loss Ratio:** Switched from paid-only to incurred basis including IBNR estimates, fixing 5% understatement.
-3. **Commission Accrual Alignment:** Commission recognized at policy effective date rather than payment date, resolving 3% timing mismatch.
-4. **Activity-Based Admin Allocation:** Replaced flat-rate allocation with activity-based costing, correcting 2% misallocation.
-5. **Customer Deduplication:** Used customer_id as unique key to prevent double-counting in segment reports, fixing 2% overcount.

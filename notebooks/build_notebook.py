@@ -17,7 +17,7 @@ cells = []
 cells.append(nbf.v4.new_markdown_cell("""# KAT Insurance — Exploratory Walkthrough
 
 This notebook is the narrative pass over the KAT dataset that produced the findings
-in `reports/executive_summary.md`. The analysis scripts in `analysis/` are the
+in `README.md`. The analysis scripts in `analysis/` are the
 reproducible pieces; this is the thinking behind them.
 
 **Starting questions**

@@ -7,6 +7,10 @@ on:
     branches: [master, main]
   workflow_dispatch:
 
+env:
+  PYTHONIOENCODING: utf-8
+  MPLBACKEND: Agg
+
 jobs:
   tests-and-stress:
     runs-on: ubuntu-latest
@@ -16,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: pip
 
       - name: Install deps
@@ -30,6 +34,14 @@ jobs:
 
       - name: Cat stress test (Monte Carlo)
         run: python analysis/07_cat_stress_test.py
+
+      - name: Headline metrics must match the committed JSON
+        run: |
+          python analysis/08_headline_metrics.py
+          git diff --exit-code reports/headline_metrics.json
+
+      - name: README numbers match computed results
+        run: python -m pytest tests -v
 
       - name: Rebuild Excel pivot starter
         run: python excel_templates/build_template.py

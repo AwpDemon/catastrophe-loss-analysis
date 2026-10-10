@@ -60,10 +60,12 @@ def main():
 
     t, p = stats.ttest_ind(q3, notq3, equal_var=False)
     d = cohens_d(q3, notq3)
-    diff_ci = bootstrap_ci(
-        np.concatenate([q3, notq3]),
-        stat=lambda x: x[: len(q3)].mean() - x[len(q3):].mean(),
-    )
+    # Resample each group separately. (The earlier version resampled the pooled
+    # months and split by position, which bootstraps under the null hypothesis
+    # and produced an interval centered on zero.)
+    boot_q3 = RNG.choice(q3, size=(4000, len(q3)), replace=True).mean(axis=1)
+    boot_rest = RNG.choice(notq3, size=(4000, len(notq3)), replace=True).mean(axis=1)
+    diff_ci = np.quantile(boot_q3 - boot_rest, [0.025, 0.975])
 
     print("=" * 66)
     print("  TEST 1 — Q3 loss ratio elevated vs. rest of year (Welch's t)")
@@ -131,7 +133,7 @@ def main():
     fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
     axes[0].boxplot(
-        [notq3, q3], labels=["Q1/Q2/Q4", "Q3"], patch_artist=True,
+        [notq3, q3], tick_labels=["Q1/Q2/Q4", "Q3"], patch_artist=True,
         boxprops=dict(facecolor="#d6eaf8"), medianprops=dict(color="#c0392b"),
     )
     axes[0].set_title(f"Monthly loss ratio by season\nWelch t p={p:.3f}, d={d:+.2f}", fontweight="bold")
